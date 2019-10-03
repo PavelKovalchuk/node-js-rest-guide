@@ -126,7 +126,25 @@ class Feed extends Component {
     })
       .then(res => {
         if (res.status !== 200 && res.status !== 201) {
-          throw new Error('Creating or editing a post failed!');
+          throw new Error('Creating or editing a post failed!');         
+          // if (res.status) {
+          //   return res.json()
+          //   .then(errorData => {     
+          //     console.log("errorData", errorData);         
+          //     if (errorData && errorData.message) {
+          //        return errorData.message;                
+          //     } else {               
+          //       return 'Creating or editing a post failed!'; 
+          //     }
+          //   })
+          //   .then(errorMessage => {
+          //     throw new Error(errorMessage);  
+          //   })
+          //   .catch(err => {
+          //     console.log("errorData.message", err);
+          //   });            
+          // }          
+          
         }
         return res.json();
       })
