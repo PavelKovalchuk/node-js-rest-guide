@@ -1,0 +1,11 @@
+{
+  "name": "js-rest-guide",
+  "version": "1.0.0",
+  "description": "https://dev.mysql.com/downloads/",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pavel",
+  "license": "ISC"
+}
