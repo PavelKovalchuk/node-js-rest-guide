@@ -52,7 +52,7 @@ class Feed extends Component {
       page--;
       this.setState({ postPage: page });
     }
-    fetch(API_BASE_NAME + 'feed/posts')
+    fetch(API_BASE_NAME + 'feed/posts?page=' + page)
       .then(res => {
         if (res.status !== 200) {
           throw new Error('Failed to fetch posts.');
