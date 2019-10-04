@@ -63,7 +63,7 @@ exports.login = (req, res, next) => {
         },
         'somesupersecretsecret',
         { expiresIn: '1h' }
-      );
+      );      
       res.status(200).json({ token: token, userId: loadedUser._id.toString() });
     })
     .catch(err => {
