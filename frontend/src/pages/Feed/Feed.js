@@ -61,7 +61,12 @@ class Feed extends Component {
       })
       .then(resData => {
         this.setState({
-          posts: resData.posts,
+          posts: resData.posts.map((post) => {
+            return {
+              ...post,
+              imagePath: post.imageUrl,
+            };
+          }),
           totalPosts: resData.totalItems,
           postsLoading: false
         });
@@ -115,7 +120,8 @@ class Feed extends Component {
     let url = API_BASE_NAME + 'feed/post';
     let method = "POST";
     if (this.state.editPost) {
-      url = 'URL';
+      url = API_BASE_NAME + 'feed/post/' + this.state.editPost._id;
+      method = "PUT";
     }
 
     fetch(url, {
@@ -124,25 +130,7 @@ class Feed extends Component {
     })
       .then(res => {
         if (res.status !== 200 && res.status !== 201) {
-          throw new Error('Creating or editing a post failed!');         
-          // if (res.status) {
-          //   return res.json()
-          //   .then(errorData => {     
-          //     console.log("errorData", errorData);         
-          //     if (errorData && errorData.message) {
-          //        return errorData.message;                
-          //     } else {               
-          //       return 'Creating or editing a post failed!'; 
-          //     }
-          //   })
-          //   .then(errorMessage => {
-          //     throw new Error(errorMessage);  
-          //   })
-          //   .catch(err => {
-          //     console.log("errorData.message", err);
-          //   });            
-          // }          
-          
+          throw new Error('Creating or editing a post failed!');   
         }
         return res.json();
       })
