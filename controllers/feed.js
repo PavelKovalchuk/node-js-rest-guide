@@ -33,9 +33,10 @@ exports.createPost = (req, res, next) => {
     error.statusCode = 422;
     throw error;
   }
-  console.log("++++++++++++++++ req.file.path ", req.file.path);
+  
+  const validImagePath = req.file.path.replace(/\\/g, "/");
 
-  const imageUrl = req.file.path;
+  const imageUrl = validImagePath;
   const title = req.body.title;
   const content = req.body.content;
 
@@ -110,7 +111,8 @@ exports.updatePost = (req, res, next) => {
         clearImage(post.imageUrl);
       }
       post.title = title;
-      post.imageUrl = imageUrl;
+      const validImagePath = imageUrl.replace(/\\/g, "/");
+      post.imageUrl = validImagePath;
       post.content = content;
       return post.save();
     })
