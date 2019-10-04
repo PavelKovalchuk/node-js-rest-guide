@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import openSocket from "socket.io-client";
 
 import Post from '../../components/Feed/Post/Post';
 import Button from '../../components/Button/Button';
@@ -37,6 +38,9 @@ class Feed extends Component {
       .catch(this.catchError);
 
     this.loadPosts();
+
+    // Socket starts
+    openSocket(API_BASE_NAME);
   }
 
   loadPosts = direction => {
