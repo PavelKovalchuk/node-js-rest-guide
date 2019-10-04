@@ -8,8 +8,8 @@ import Paginator from '../../components/Paginator/Paginator';
 import Loader from '../../components/Loader/Loader';
 import ErrorHandler from '../../components/ErrorHandler/ErrorHandler';
 import './Feed.css';
+import { API_BASE_NAME } from '../../constants';
 
-const API_BASE_NAME = "http://localhost:8080/";
 
 class Feed extends Component {
   state = {
