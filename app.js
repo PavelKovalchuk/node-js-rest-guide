@@ -3,9 +3,11 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const multer = require('multer');
+const morgan = require('morgan');
 
 const feedRoutes = require('./routes/feed');
 const authRoutes = require('./routes/auth');
+const winston = require('./config/winston');
 
 const app = express();
 
@@ -30,6 +32,15 @@ const fileFilter = (req, file, cb) => {
     cb(null, false);
   }
 };
+// can use combined
+app.use(
+  morgan('dev', {
+     stream: winston.stream,
+     skip: function (req, res) {        
+       return req.method === "OPTIONS";
+      }
+  })
+);
 
 // app.use(bodyParser.urlencoded()); // x-www-form-urlencoded <form>
 app.use(bodyParser.json()); // application/json
@@ -53,6 +64,14 @@ app.use((error, req, res, next) => {
   const status = error.statusCode || 500;
   const message = error.message;
   const data = error.data ? error.data : [];
+  let user = "anonym";
+  if (req.userId) {
+    user = " userId: " + req.userId;
+  }
+
+  // this line to include winston logging
+  winston.error(`${status} - ${message} - ${user} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+
   res.status(status).json({ message: message, data: data });
 });
 
